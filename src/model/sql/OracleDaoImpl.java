@@ -45,6 +45,8 @@ public class OracleDaoImpl implements OracleDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			// conn의 null 여부를 판단하지 않고, conn 라인에서 오류가 발생할 경우
+			// null.close()를 호출하기 때문에 NullPointer 예외가 추가로 발생
 			if(conn != null)
 				try {
 					conn.close();
@@ -74,7 +76,7 @@ public class OracleDaoImpl implements OracleDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				conn.close();
+				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -100,7 +102,7 @@ public class OracleDaoImpl implements OracleDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				conn.close();
+				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -129,7 +131,7 @@ public class OracleDaoImpl implements OracleDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				conn.close();
+				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -158,7 +160,7 @@ public class OracleDaoImpl implements OracleDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				conn.close();
+				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

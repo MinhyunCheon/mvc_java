@@ -43,11 +43,12 @@ public class MvcMain {
 //		System.out.println(od.updateRow(bv) == 1 ? "success" : "fail");
 		
 		// delete test
-		System.out.println("게시물 삭제");
-		BbsVO bv = new BbsVO();
-		bv.setSeq(0);
-		
-		System.out.println(od.deleteRow(bv) == 1 ? "success" : "fail");
+//		System.out.println("게시물 삭제");
+//		// BbsVO 대신 Integer 클래스로 감싸서 호출할 수 있다.
+//		BbsVO bv = new BbsVO();
+//		bv.setSeq(0);
+//		
+//		System.out.println(od.deleteRow(bv) == 1 ? "success" : "fail");
 	}
 
 }
