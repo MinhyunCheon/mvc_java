@@ -35,11 +35,10 @@ public class OracleDaoImpl implements OracleDao {
 			bv = (BbsVO)obj;
 			
 			conn = DriverManager.getConnection(URL, USER, PWD);
-			psmt = conn.prepareStatement("INSERT INTO BBS_TBL VALUES (BBS_SEQ.NEXTVAL,?,?,?,SYSDATE,?)");
+			psmt = conn.prepareStatement("INSERT INTO BBS_TBL VALUES (BBS_SEQ.NEXTVAL,?,?,?,SYSDATE,0)");
 			psmt.setString(1, bv.getSubject());
 			psmt.setString(2, bv.getContent());
 			psmt.setString(3, bv.getWriter());
-			psmt.setInt(4, bv.getViewCnt());
 			
 			flag = psmt.executeUpdate();
 		} catch (Exception e) {
@@ -67,8 +66,8 @@ public class OracleDaoImpl implements OracleDao {
 		
 		try {
 			conn = DriverManager.getConnection(URL, USER, PWD);
-			psmt = conn.prepareStatement("UPDATE BBS_TBL SET VIEWCNT = ? WHERE SEQ = ?");
-			psmt.setInt(1, bv.getViewCnt() + 1);
+			psmt = conn.prepareStatement("UPDATE BBS_TBL SET CONTENT = ?, REGDATE = SYSDATE WHERE SEQ = ?");
+			psmt.setString(1, bv.getContent());
 			psmt.setInt(2, bv.getSeq());
 			
 			flag = psmt.executeUpdate();
@@ -120,7 +119,7 @@ public class OracleDaoImpl implements OracleDao {
 		
 		try {
 			conn = DriverManager.getConnection(URL, USER, PWD);
-			psmt = conn.prepareStatement("SELECT * FROM BBS_TBL");
+			psmt = conn.prepareStatement("SELECT SEQ, SUBJECT, CONTENT, WRITER, TO_CHAR(REGDATE, 'YYYY-MM-DD'), VIEWCNT FROM BBS_TBL ORDER BY SEQ DESC");
 			
 			rs = psmt.executeQuery();
 			list = new ArrayList<Object>();
@@ -139,6 +138,28 @@ public class OracleDaoImpl implements OracleDao {
 		
 		return list;
 	}
+	
+	private void updateViewCnt(Object obj) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PWD);
+			psmt = conn.prepareStatement("UPDATE BBS_TBL SET VIEWCNT = VIEWCNT + 1 WHERE SEQ = ?");
+			psmt.setInt(1, ((BbsVO)obj).getSeq());
+
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 	@Override
 	public Object selectRow(Object obj) {
@@ -151,6 +172,7 @@ public class OracleDaoImpl implements OracleDao {
 			conn = DriverManager.getConnection(URL, USER, PWD);
 			psmt = conn.prepareStatement("SELECT * FROM BBS_TBL WHERE SEQ = ?");
 			psmt.setInt(1, ((BbsVO)obj).getSeq());
+			updateViewCnt(obj);
 			
 			rs = psmt.executeQuery();
 			if(rs.next()) {

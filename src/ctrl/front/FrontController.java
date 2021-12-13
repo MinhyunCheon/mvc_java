@@ -1,8 +1,5 @@
 package ctrl.front;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ctrl.util.BeanFactory;
 
 public class FrontController {

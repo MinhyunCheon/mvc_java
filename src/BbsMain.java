@@ -3,11 +3,16 @@ import java.util.List;
 
 import ctrl.front.FrontController;
 import model.vo.BbsVO;
+import view.View;
 
 public class BbsMain {
 
 	public static void main(String[] args) {
-		FrontController fc = new FrontController();
+		View view = new View();
+		
+		view.mainMenu();
+		
+//		FrontController fc = new FrontController();
 		
 		// int seq, String subject, String content, String writer, String regDate, int viewCnt
 		// insert
@@ -40,10 +45,10 @@ public class BbsMain {
 //		}
 		
 		// select
-		BbsVO bv = new BbsVO();
-		bv.setSeq(22);
-		
-		System.out.println(fc.requestProc(4, bv));
+//		BbsVO bv = new BbsVO();
+//		bv.setSeq(22);
+//		
+//		System.out.println(fc.requestProc(4, bv));
 	}
 
 }
