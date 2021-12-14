@@ -109,6 +109,42 @@ public class OracleDaoImpl implements OracleDao {
 		
 		return flag;
 	}
+	
+	@Override
+	public List<Object> selectCustom(Object obj) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<Object> list = null;
+		BbsVO bv = (BbsVO)obj;
+		String qString = bv.getSearchCondition() + " LIKE '%" + bv.getSearchKeyword() + "%'";
+		System.out.println(qString);
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PWD);
+			psmt = conn.prepareStatement("SELECT SEQ, SUBJECT, CONTENT, WRITER, TO_CHAR(REGDATE, 'YYYY-MM-DD'), VIEWCNT FROM BBS_TBL "
+					+ "WHERE "
+					+ qString
+					+ " "
+					+ "ORDER BY SEQ DESC");
+			
+			rs = psmt.executeQuery();
+			list = new ArrayList<Object>();
+			while(rs.next()) {
+				list.add(new BbsVO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
 
 	@Override
 	public List<Object> selectRow() {

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import ctrl.DeleteController;
 import ctrl.SelectController;
+import ctrl.SelectCustomController;
 import ctrl.UpdateController;
 import ctrl.WriteController;
 
@@ -19,6 +20,7 @@ public class BeanFactory {
 		map.put(2, new UpdateController());
 		map.put(3, new DeleteController());
 		map.put(4, new SelectController()); // 4, 5 통합
+		map.put(5, new SelectCustomController());
 	}
 	
 	public synchronized static BeanFactory getInstence() {

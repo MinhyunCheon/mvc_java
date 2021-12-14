@@ -9,4 +9,5 @@ public interface BbsService {
 	
 	public List<Object> selectSv();
 	public Object selectSv(Object obj);
+	public List<Object> selectCustomSv(Object obj);
 }

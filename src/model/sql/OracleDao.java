@@ -11,4 +11,5 @@ public interface OracleDao {
 	// select
 	public List<Object> selectRow();
 	public Object selectRow(Object obj);
+	public List<Object> selectCustom(Object obj);
 }

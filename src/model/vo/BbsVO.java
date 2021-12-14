@@ -1,6 +1,6 @@
 package model.vo;
 
-public class BbsVO {
+public class BbsVO extends FilterVO {
 	private int seq;
 	private String subject;
 	private String content;

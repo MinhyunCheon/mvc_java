@@ -1,14 +1,14 @@
 package ctrl;
 
 import ctrl.util.Controller;
+import ctrl.util.ServiceFactory;
 import service.BbsService;
-import service.BbsServiceImpl;
 
 public class SelectController implements Controller {
 	private BbsService service;
 
 	public SelectController() {
-		service = new BbsServiceImpl();
+		service = ServiceFactory.getInstence().GetBean("bbs");
 	}
 	
 	@Override

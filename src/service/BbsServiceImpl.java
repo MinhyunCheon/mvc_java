@@ -42,5 +42,11 @@ public class BbsServiceImpl implements BbsService {
 		System.out.println("Service selectSv2");
 		return dao.selectRow(obj);
 	}
+	
+	@Override
+	public List<Object> selectCustomSv(Object obj) {
+		System.out.println("Service selectCustomSv");
+		return dao.selectCustom(obj);
+	}
 
 }

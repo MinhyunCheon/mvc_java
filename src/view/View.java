@@ -27,6 +27,7 @@ public class View {
 			System.out.println("3. 게시물 삭제");
 			System.out.println("4. 게시물 목록 조회");
 			System.out.println("5. 게시물 상세 조회");
+			System.out.println("6. 게시물 조건 조회");
 			System.out.println("99. 프로그램 종료");
 			System.out.println("***********************");
 			System.out.print("수행할 작업 번호를 선택하세요. : ");
@@ -57,6 +58,11 @@ public class View {
 			case 5:
 				System.out.println("게시물을 조회합니다.");
 				select();
+				break;
+				
+			case 6:
+				System.out.println("조건에 맞는 게시물을 조회합니다.");
+				search();
 				break;
 				
 			case 99:
@@ -104,6 +110,10 @@ public class View {
 	
 	public void selectAll() {
 		List<Object> list = (List<Object>) fc.requestProc(4, null);
+		printList(list);
+	}
+	
+	private void printList(List<Object> list) {
 		Iterator<Object> it = list.iterator();
 		
 		while(it.hasNext()) {
@@ -118,5 +128,45 @@ public class View {
 		sc.nextLine();
 		
 		System.out.println(fc.requestProc(4, bv));
+	}
+	
+	public void search() {
+		bv = new BbsVO();
+		int num;
+		String tempCon = null;
+		List<Object> list;
+		System.out.println("1. 제목 검색");
+		System.out.println("2. 내용 검색");
+		System.out.println("3. 작성자 검색");
+		
+		System.out.print("검색할 조건 번호를 입력하세요. : ");
+		num = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.print("검색어를 입력하세요. : ");
+		bv.setSearchKeyword(sc.nextLine());
+		
+		switch (num) {
+		case 1:
+			tempCon = "SUBJECT";
+			break;
+			
+		case 2:
+			tempCon = "CONTENT";
+			break;
+			
+		case 3:
+			tempCon = "WRITER";
+			break;
+
+		default:
+			System.out.println("다시 선택해주세요.");
+			break;
+		}
+		
+		bv.setSearchCondition(tempCon);
+		
+		list = (List<Object>) fc.requestProc(5, bv);
+		printList(list);
 	}
 }

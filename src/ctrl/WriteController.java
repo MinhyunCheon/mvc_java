@@ -1,15 +1,15 @@
 package ctrl;
 
 import ctrl.util.Controller;
+import ctrl.util.ServiceFactory;
 import service.BbsService;
-import service.BbsServiceImpl;
 
 public class WriteController implements Controller {
 	// DI(Dependency Injection
 	private BbsService service;
 	
 	public WriteController() {
-		service = new BbsServiceImpl();
+		service = ServiceFactory.getInstence().GetBean("bbs");
 	}
 
 	@Override
